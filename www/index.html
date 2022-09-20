@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+-->
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- Color theme for statusbar -->
+    <!-- <meta name="theme-color" content="#2196f3"> -->
+    <meta name="color-scheme" content="light dark">
+
+
+    <!-- our project just needs Font Awesome Solid + Brands -->
+    <link href="/your-path-to-fontawesome/css/fontawesome.css" rel="stylesheet">
+    <link href="/your-path-to-fontawesome/css/brands.css" rel="stylesheet">
+    <link href="/your-path-to-fontawesome/css/solid.css" rel="stylesheet">
+
+
+    <!-- Your app title -->
+    <title>My App</title>
+    <!-- Path to Framework7 Library CSS -->
+    <link rel="stylesheet" href="lib/framework7/framework7-bundle.css">
+    <!-- Path to icons -->
+    <link rel="stylesheet" href="css/icons.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="./css/mycss.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Statusbar overlay -->
+        <div class="statusbar"></div>
+
+        <!-- Your main view, should have "view-main" class -->
+        <div class="view view-main">
+            <!-- Initial Page, "data-name" contains page name -->
+            <div data-name="index" class="page">
+                <!-- Scrollable page content -->
+                <div class="page-content">
+                    <form id="Primerovisible">
+                        <div class="container">
+                            <h1>Home-Banking</h1>
+
+                            <hr>
+                            <div class="label">
+                                <label for="email"><b>Email</b></label>
+                            </div>
+
+                            <div class="input-login">
+                                <input type="text" placeholder="ingrese su email" name="email" id="email" required>
+                                <i class="fa-regular fa-user">hg</i>
+                            </div>
+
+                            <div class="label">
+                                <label><b>Password</b></label>
+                            </div>
+
+                            <div class="input-login">
+                                <input type="password" placeholder="ingrese su contraseña" name="psw" id="psw" required>
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <hr>
+
+                            <div class="container" style="text-align: center;">
+                                <button type="button" id="signIn" name="signIn" 
+                                    class="registerbtn">Login</button>
+
+                                <a id="submitData" name="submitData" 
+                                    class="registera">Crear Cuenta </a>
+
+                            </div>
+
+                        </div>
+
+
+                    </form>
+                    <div id="restoVisible">
+
+                        <div class="botonesRight">
+
+                            <button type="button" id="cerrar" name="cerrar" class="registerbtnCerrar">Cerrar
+                                sesion</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="lib/framework7/framework7-bundle.min.js"></script>
+    <!--<script type="text/javascript" src="lib/framework7/framework7.js"></script>-->
+    <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js";
+        import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-database.js";
+
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHcVadBq69eTrOT5P_-BZ7JibGSfjwqOM",
+            authDomain: "home-banking-945db.firebaseapp.com",
+            databaseURL: "https://home-banking-945db-default-rtdb.firebaseio.com",
+            projectId: "home-banking-945db",
+            storageBucket: "home-banking-945db.appspot.com",
+            messagingSenderId: "244751500447",
+            appId: "1:244751500447:web:cd2093960bd9f8d91a0eaa",
+            measurementId: "G-N21N9QKHQV"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const database = getDatabase(app);
+
+        submitData.addEventListener('click', (e) => {
+
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('psw').value;
+
+            //sign up user
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    // ... user.uid
+                    set(ref(database, 'users/' + user.uid), {
+                        email: email,
+                        password: password
+                    })
+                        .then(() => {
+                            // Data saved successfully!
+                            alert('user created successfully');
+
+                        })
+                        .catch((error) => {
+                            // The write failed...
+                            alert(error);
+                        });
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // ..
+                    alert(errorMessage);
+                });
+            sign, out, user
+            signOut(auth).then(() => {
+                // Sign-out successful.
+            }).catch((error) => {
+                // An error happened.
+            });
+        });
+
+        // log in user
+
+        signIn.addEventListener('click', (p) => {
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('psw').value;
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    // ...
+                    console.log('logiN');
+
+                    // save log in details into real time database
+                    var lgDate = new Date();
+                    update(ref(database, 'users/' + user.uid), {
+                        last_login: lgDate,
+                    })
+                        .then(() => {
+                            // Data saved successfully!
+                            alert('user logged in successfully');
+
+                        })
+                        .catch((error) => {
+                            // The write failed...
+                            alert(error);
+                        });
+
+                    mainView.router.navigate("home.html");
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
+        })
+
+        cerrar.addEventListener('click', (h) => {
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('psw').value;
+            signOut(auth).then(() => {
+                // Sign-out successful.
+
+            }).catch((error) => {
+                // An error happened.
+            });
+        })
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                const uid = user.uid;
+                console.log('auth: signin');
+
+                mostrar();
+
+
+                // ...
+            } else {
+                // User is signed out
+                // ...
+                console.log('signOut');
+                desmotrar();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

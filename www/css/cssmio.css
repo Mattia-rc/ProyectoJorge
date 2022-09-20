@@ -1,0 +1,230 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,186,108,1) 0%, rgba(158,59,40,1) 71%);
+    
+  }
+  
+  * {
+    box-sizing: border-box;
+    
+  }
+
+  .page-content{
+    background: rgb(6,111,22);
+background: radial-gradient(circle, rgba(6,111,22,1) 0%, rgba(8,96,43,1) 100%);
+  }
+  
+  /* Add padding to containers */
+  
+  .container {
+    padding: 15px;
+    width: 60%;
+    margin: auto;
+    
+  }
+  
+  h1{
+    text-align: center;
+  }
+  
+  /* Full-width input fields */
+  
+  input[type=text],
+  input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: list-block;
+    border: none;
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  input[type=text]:focus,
+  input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+   
+  }
+  
+  /* Overwrite default styles of hr */
+  
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+  
+  /* Set a style for the submit button */
+  
+  .registerbtn {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,186,108,1) 0%, rgba(83,72,70,1) 0%);
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    opacity: 0.9;
+    border-radius: 10px;
+  }
+  
+  .registerbtn:hover {
+    opacity: 1;
+  }
+  
+  /* Add a blue text color to links */
+  
+  a {
+    color: dodgerblue;
+  }
+  
+  /* Set a grey background color and center the text of the "sign in" section */
+  
+  .signin {
+   
+    text-align: center;
+  }
+  
+  .registerbtnCerrar{
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,186,108,1) 0%, rgba(83,72,70,1) 0%);
+    color: white;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    opacity: 0.9;
+    border-radius: 10px;
+  }
+  .registerbtnCerrar:hover {
+    opacity: 1;
+  }
+  
+  
+  #Primerovisible{
+    display: block;
+  }
+  
+  #restoVisible{
+    display: none;
+   
+  }
+  .botonesRight{
+    text-align: right;
+  }
+  
+  .tittle-login {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (min-width: 300px ) and (max-width: 700px){
+    .log {
+      display: flex;
+      flex-direction: column;
+      align-items: center ;
+    }
+    .registerbtn {
+      width: 150px;
+    }
+  }
+  *{
+    padding: 0;
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+}
+.container_nav-main{
+    background-color: #219f94;
+    padding: 5px;
+    
+}
+.container_nav-main ul{
+    display: flex;
+    gap: 50px;
+    justify-content: flex-end;
+    margin-right: 4%;
+    padding-top: 11px;
+}
+.container_nav-main ul li{
+    
+    list-style: none;
+}
+
+.container_nav-main a{
+    
+    text-decoration: none;
+    color: #fff;
+    font-size:20px;
+    padding-top: 5px;
+}
+
+.container_nav-main a:hover{
+    border: solid black 1px;
+    border-radius:15px;
+    padding: 8px;
+    background-color: #F2F5C8;
+    color: #111;
+}
+
+
+.container_main{
+    display: flex;
+}
+.contenido_img{
+    width: 56%;
+}
+.container_info{
+    width: 44%;
+    background-color: rgb(48, 46, 56);
+    height: 100vh;
+}
+.nombre_flex{
+    display: flex;
+    align-items: center;
+    padding-top: 20%;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 20%;
+}
+.class_img_edit img{
+    width: 100px;
+
+}
+
+.text_bank h1{
+    color: #fff;
+    
+}
+
+.display_flex_container{
+    margin-top: 7%;
+    margin-left: 9%;
+}
+.display_flex_container p{
+    color: #fff;
+    font-size: 25px;
+    padding-top: 40px;
+}
+.d-flex{
+    align-items: center;
+}
+
+.me-3{
+    gap: 1rem;
+}
+
+.iconss{
+    padding-right: 20px;
+}
+
+
+
+
+.contenido_img img{
+ width:100%;
+ height: 980px;
+   
+}
