@@ -13,8 +13,20 @@
 
  }
 
+
  h1 {
    text-align: center;
+ }
+
+ .nom_banco {
+   color: #fff;
+   font-size: 25px;
+ }
+
+ .h4_text {
+   text-align: center;
+   color: rgb(228, 226, 226);
+   font-size: 20px;
  }
 
  /* Full-width input fields */
@@ -32,7 +44,7 @@
 
  input[type=text]:focus,
  input[type=password]:focus {
-   background-color: #ddd;
+   background-color: rgb(48, 46, 56);
    outline: none;
 
  }
@@ -47,15 +59,16 @@
  /* Set a style for the submit button */
 
  .registerbtn {
-   background: #006cff;
+   background: #976DD0;
    color: white;
-   padding: 16px 20px;
-   margin: 8px 0;
+   padding: 12px 20px;
    border: none;
    cursor: pointer;
    width: 50%;
    opacity: 0.9;
    border-radius: 10px;
+   width: 100%;
+   margin-top: 10px;
  }
 
  .registerbtn:hover {
@@ -112,12 +125,19 @@
 
  .input-login {
    position: relative;
+   background-color: rgb(48, 46, 56);
 
  }
 
  .input-login input {
    padding-left: 55px;
-
+   background-color: rgb(48, 46, 56);
+   border: 1px solid #fff;
+   border-radius: 0px;
+   margin-top: -2%;
+   padding: 9px;
+   color: #fff;
+   font-size: 12px;
  }
 
  .input-login i {
@@ -130,6 +150,17 @@
  }
 
  .registera {
+   padding-top: 20px;
    color: #fff;
-   font-size: 20px;
+   font-size: 9px;
+ }
+
+ .logo_persona {
+   width: 30%;
+
+ }
+
+ .flex_img {
+   display: flex;
+   justify-content: center;
  }
