@@ -85,9 +85,10 @@
 
 
                             <div class="container_Dos" style="text-align: center;">
-                                <button type="button" id="signIn" name="signIn" class="registerbtn">Sign in</button>
+                                <button type="button" id="signIn" name="signIn" class="open-alert2 registerbtn">Sign in</button>
                                 <br>
-                                <a id="submitData" name="submitData" class="registera">Create Account </a>
+                                <a id="submitData" name="submitData" href="about.html"
+                                    class="registera open-alert">Create Account </a>
 
                             </div>
 
@@ -99,8 +100,7 @@
 
                         <div class="botonesRight">
 
-                            <button type="button" id="cerrar" name="cerrar" class="registerbtnCerrar">Cerrar
-                                sesion</button>
+                            <button type="button" id="cerrar" name="cerrar" class="registerbtnCerrar">Cerrar sesion</button>
                         </div>
 
                     </div>
@@ -166,17 +166,9 @@
                             alert('user created successfully');
 
                         })
-                        .catch((error) => {
-                            // The write failed...
-                            alert(error);
-                        });
+                      
                 })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    // ..
-                    alert(errorMessage);
-                });
+               
             sign, out, user
             signOut(auth).then(() => {
                 // Sign-out successful.
@@ -194,6 +186,8 @@
                 .then((userCredential) => {
                     // Signed in
                     const user = userCredential.user;
+
+
                     // ...
                     console.log('logiN');
 
@@ -207,18 +201,18 @@
                             alert('user logged in successfully');
 
                         })
-                        .catch((error) => {
+                         .catch((error) => {
                             // The write failed...
-                            alert(error);
-                        });
+                            
+                        }); 
 
-                    mainView.router.navigate("home.html");
+                    mainView.router.navigate("/home/");
                 })
-                .catch((error) => {
+               /*  .catch((error) => {
                     const errorCode = error.code;
                     const errorMessage = error.message;
                     alert(errorMessage);
-                });
+                }); */
         })
 
         cerrar.addEventListener('click', (h) => {
@@ -227,9 +221,9 @@
             signOut(auth).then(() => {
                 // Sign-out successful.
 
-            }).catch((error) => {
+            })/* .catch((error) => {
                 // An error happened.
-            });
+            }); */
         })
 
         onAuthStateChanged(auth, (user) => {
@@ -239,7 +233,7 @@
                 const uid = user.uid;
                 console.log('auth: signin');
 
-                mostrar();
+                //mostrar();
 
 
                 // ...
@@ -247,7 +241,7 @@
                 // User is signed out
                 // ...
                 console.log('signOut');
-                desmotrar();
+                //desmotrar();
             }
         });
     </script>

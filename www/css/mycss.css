@@ -1,5 +1,6 @@
  * {
    box-sizing: border-box;
+
  }
 
  /* Add padding to containers */
@@ -11,6 +12,61 @@
  .container {
    padding: 16px;
 
+ }
+
+ .contenedor2 {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin: 20px;
+   gap: 5px;
+ }
+
+ .panel-control-padre {
+
+   border-top: solid 2px #976DD0;
+   border-bottom: solid 2px #976DD0;
+
+ }
+
+ .flex_panel-control2 {
+   display: flex;
+   justify-content: space-between;
+   margin: 0 15% 0 15%;
+ }
+
+ .flex_panel-control {
+   display: flex;
+   justify-content: space-between;
+   margin: 0 15% 0 15%;
+   height: 100px;
+   margin-bottom: 0%;
+   height: 90px;
+ }
+
+ .flex_panel-control2 p {
+   border: 2px solid #976DD0;
+   padding: 25px;
+   margin-top: 0%;
+   background-color: #fff;
+ }
+
+ .cuadrado1 {
+   height: 60px;
+   width: 60px;
+   border-radius: 10px;
+ }
+
+
+ .flex_panel-control p {
+   border: 2px solid #976DD0;
+   padding: 25px;
+   background-color: #fff;
+ }
+
+ .fondos1 {
+   width: 150px;
+   height: 30px;
  }
 
 
@@ -71,6 +127,18 @@
    margin-top: 10px;
  }
 
+ .registerbtn2 {
+  background: #976DD0;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  opacity: 0.9;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 10px;
+}
  .registerbtn:hover {
    opacity: 1;
  }
@@ -163,4 +231,35 @@
  .flex_img {
    display: flex;
    justify-content: center;
+ }
+
+
+ .flex_panel-control p {
+   border: 2px solid #976DD0;
+   padding: 25px;
+
+   background-color: #fff;
+ }
+
+ .display_flex-contenedor h4 {
+   background-color: #969faa;
+   margin-top: 10px;
+   padding-left: 10px;
+   border-radius: 10px;
+   color: #111;
+   text-transform: uppercase;
+   width: 180px;
+   height: 55px;
+ }
+
+ .display_flex-contenedor {
+   display: flex;
+   justify-content: space-evenly;
+   align-items: center;
+
+ }
+
+ .imagin-1 {
+   width: 45px;
+   height: 55px;
  }
