@@ -38,9 +38,9 @@ $$(document).on('page:init', function (e) {
     app.dialog.alert('Usuario creado correctamente');
   });
 
-  $$('.open-alert2').on('click', function () {
+  /*$$('.open-alert2').on('click', function () {
     app.dialog.alert('Usuario y/o Contraseña incorrecta');
-  });
+  });*/
 
 })
 
