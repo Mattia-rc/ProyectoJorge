@@ -51,3 +51,8 @@ $$(document).on('page:init', '.page[data-name="about"]', function (e) {
   console.log(e);
   alert('Hello');
 })
+
+$$(document).on('page:init', '.page[data-name="home"]', function (e) {
+
+  console.log(botonCerrarSesion);
+})

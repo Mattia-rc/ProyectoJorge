@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -81,13 +82,11 @@
                             <div class="input-login">
                                 <input type="password" placeholder="ingrese su contraseña" name="psw" id="psw" required>
                                 <i class="fa-solid fa-user"></i>
-
-                 git            </div>
+                            </div>
 
 
                             <div class="container_Dos" style="text-align: center;">
-                                <button type="button" id="signIn" name="signIn" class="open-alert2 registerbtn">Sign
-                                    in</button>
+                                <button type="button" id="signIn" name="signIn" class="open-alert2 registerbtn">Sign in</button>
                                 <br>
                                 <a id="submitData" name="submitData" href="about.html"
                                     class="registera open-alert">Create Account </a>
@@ -102,8 +101,7 @@
 
                         <div class="botonesRight">
 
-                            <button type="button" id="cerrar" name="cerrar" class="registerbtnCerrar">Cerrar
-                                sesion</button>
+                            <button type="button" id="cerrar" name="cerrar" class="registerbtnCerrar">Cerrar sesion</button>
                         </div>
 
                     </div>
@@ -117,6 +115,7 @@
     <script type="text/javascript" src="lib/framework7/framework7-bundle.min.js"></script>
     <!--<script type="text/javascript" src="lib/framework7/framework7.js"></script>-->
     <script type="text/javascript" src="js/my-app.js"></script>
+
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
@@ -169,9 +168,9 @@
                             alert('user created successfully');
 
                         })
-
+                      
                 })
-
+               
             sign, out, user
             signOut(auth).then(() => {
                 // Sign-out successful.
@@ -204,20 +203,18 @@
                             alert('user logged in successfully');
 
                         })
-                        .catch(() => {
+                         .catch((error) => {
                             // The write failed...
-                            console.log("ERROR")
-                            alert('Usuario y/o Contraseña incorrecta');
-
-                        });
+                            
+                        }); 
 
                     mainView.router.navigate("/home/");
                 })
-            /*  .catch((error) => {
-                 const errorCode = error.code;
-                 const errorMessage = error.message;
-                 alert(errorMessage);
-             }); */
+               /*  .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                }); */
         })
 
         cerrar.addEventListener('click', (h) => {
