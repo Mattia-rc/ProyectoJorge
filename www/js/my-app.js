@@ -17,6 +17,7 @@ var app = new Framework7({
     { path: '/about/', url: 'about.html', },
     { path: '/index/', url: 'index.html', },
     { path: '/home/', url: 'home.html', },
+    { path: '/cards/', url: 'cards.html', },
   ]
   // ... other parameters
 });
@@ -30,29 +31,91 @@ $$(document).on('deviceready', function () {
 
 // Option 1. Using one 'page:init' handler for all pages
 $$(document).on('page:init', function (e) {
-  // Do something here when page loaded and initialized
-  console.log(e);
+
+})
 
 
-  $$('.open-alert').on('click', function () {
-    app.dialog.alert('Usuario creado correctamente');
+
+// TODO: Replace the following with your app's Firebase project configuration
+// See: https://firebase.google.com/docs/web/learn-more#config-object
+
+
+$$(document).on('page:init', '.page[data-name="index"]', function (e) {
+
+
+  $$('#signIn').on('click', fnlog)
+  $$('#CrearCuenta').on('click', fncrear)
+
+
+
+
+  function fnlog(){
+    const  email = $$('#email').val();
+    const password = $$('#psw').val();
+    firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+    // Signed in
+    var user = userCredential.user;
+
+    console.log("hola@!!! " + email);
+    // ...
+
+    mainView.router.navigate('/home/')
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+
+    console.error(errorCode);
+        console.error(errorMessage);
   });
 
-  /*$$('.open-alert2').on('click', function () {
-    app.dialog.alert('Usuario y/o Contraseña incorrecta');
-  });*/
-
-})
+  }
 
 
-// Option 2. Using live 'page:init' event handlers for each page
-$$(document).on('page:init', '.page[data-name="about"]', function (e) {
-  // Do something here when page with data-name="about" attribute loaded and initialized
-  console.log(e);
-  alert('Hello');
-})
 
-$$(document).on('page:init', '.page[data-name="home"]', function (e) {
+  function fncrear() {
+    alert("hola")
+    const  email = $$('#email').val();
+    const password = $$('#psw').val();
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Signed in
+        var user = userCredential.user;
+        console.log("Bienvenid@!!! " + email);
+        // ...
+        mainView.router.navigate('/siguientePantallaDeUsuarioOK/');
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
 
-  console.log(botonCerrarSesion);
-})
+        console.error(errorCode);
+        console.error(errorMessage);
+
+        if (errorCode == "auth/email-already-in-use") {
+          console.error("el mail ya esta usado");
+        }
+
+        // ..
+      });
+
+  }
+});
+
+
+$$(document).on('page:init', '.page[data-name="home"]', function (a){
+  $$('#botonCerrarSesion').on('click', fnCerrar)
+  
+
+    function fnCerrar(){
+      firebase.auth().signOut().then(() => {
+        // Sign-out successful.
+        mainView.router.navigate('/index/')
+        console.log("chau");
+      }).catch((error) => {
+        // An error happened.
+      });
+    }
+
+  })
