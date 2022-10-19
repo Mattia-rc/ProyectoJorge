@@ -59,9 +59,9 @@
 
 
  .flex_panel-control p {
-  border: 2px solid #976DD0;
-  padding: 35px;  
-  background-color: #fff;
+   border: 2px solid #976DD0;
+   padding: 35px;
+   background-color: #fff;
  }
 
  .fondos1 {
@@ -87,8 +87,7 @@
 
  /* Full-width input fields */
 
- input[type=text],
- input[type=password] {
+ .input-login input {
    width: 100%;
    padding: 15px;
    margin: 5px 0 22px 0;
@@ -98,8 +97,7 @@
    border-radius: 10px;
  }
 
- input[type=text]:focus,
- input[type=password]:focus {
+ .input-login input:focus {
    background-color: rgb(48, 46, 56);
    outline: none;
 
@@ -130,7 +128,7 @@
  .registerbtn2 {
    background: #976DD0;
    color: white;
-   padding: 12px 20px;
+   padding: 12px 45px;
    border: none;
    cursor: pointer;
    width: 50%;
@@ -138,7 +136,7 @@
    border-radius: 10px;
    width: 80%;
    margin-top: 30%;
-   margin-left: 10%;
+   margin-left: 30%;
  }
 
  .registerbtn:hover {
@@ -264,4 +262,47 @@
  .imagin-1 {
    width: 45px;
    height: 55px;
+ }
+
+ .backclass {
+   color: #976DD0;
+   font-size: 20px;
+   padding-left: 5%;
+ }
+
+ .h4_tar-det {
+   display: flex;
+   justify-content: center;
+   color: #969faa;
+   font-size: 25px;
+   padding-top: 40px;
+ }
+
+ .tarjeta-input2 {
+   display: inline;
+   text-align: center;
+   background-color: #f1f1f1;
+   color: #969faa;
+   margin: 0%;
+   padding: 0%;
+   width: 49.5%;
+   height: 40px;
+   border-radius: 0%;
+   border-color: #969faa;
+ }
+
+ .tarjeta-input3 {
+   text-align: center;
+   background-color: #f1f1f1;
+   color: #969faa;
+   margin: 0%;
+   padding: 0%;
+   height: 40px;
+   border-radius: 0%;
+   border-color: #969faa;
+ }
+
+ .boton-enviardinero {
+   padding: 60px 80px 0px 80px;
+
  }
