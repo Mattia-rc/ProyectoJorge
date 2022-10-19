@@ -14,10 +14,12 @@ var app = new Framework7({
   },
   // Add default routes
   routes: [
-    { path: '/about/', url: 'about.html', },
     { path: '/index/', url: 'index.html', },
     { path: '/home/', url: 'home.html', },
-    { path: '/cards/', url: 'cards.html', },
+    { path: '/envioDinero/', url: 'enviarDinero.html', },
+    { path: '/addTarjetas/', url: 'addTarjetas.html', },
+    { path: '/tarjetas/', url: 'tarjetas.html', },
+    { path: '/historial/', url: 'historial.html', },
   ]
   // ... other parameters
 });
@@ -84,7 +86,7 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
         var user = userCredential.user;
         console.log("Bienvenid@!!! " + email);
         // ...
-        mainView.router.navigate('/siguientePantallaDeUsuarioOK/');
+        mainView.router.navigate('/home/');
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -105,17 +107,67 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
 
 
 $$(document).on('page:init', '.page[data-name="home"]', function (a){
-  $$('#botonCerrarSesion').on('click', fnCerrar)
-  
+  $$('#botonCerrarSesion').on('click', fnCerrar);
+  $$('#EnvioDinero').on('click', fnEnviarDinero);
+  $$('#addTarjetas').on('click', fnaddTarjetas);
+  $$('#tarjetas').on('click', fntarjetas);
+  $$('#historial').on('click', fnhistorial);
+  function fnEnviarDinero(){
+    mainView.router.navigate('/envioDinero/')
+  }
+  function fnaddTarjetas(){
+    mainView.router.navigate('/addTarjetas/')
+  }
+  function fntarjetas(){
+    mainView.router.navigate('/tarjetas/')
+  }
+  function fnhistorial(){
+    mainView.router.navigate('/historial/')
+  }
+ 
 
     function fnCerrar(){
+      const  email = $$('#email').val();
+      const password = $$('#psw').val();
       firebase.auth().signOut().then(() => {
         // Sign-out successful.
         mainView.router.navigate('/index/')
-        console.log("chau");
+        console.log("chau " + email);
       }).catch((error) => {
         // An error happened.
       });
     }
 
+  })
+ 
+  $$(document).on('page:init', '.page[data-name="envioDinero"]', function (a){
+    $$('#volverparaatras').on('click', fnVolverAtras)
+
+    function fnVolverAtras(){
+      mainView.router.navigate('/home/')
+    }
+  })
+
+  $$(document).on('page:init', '.page[data-name="tarjetas"]', function (a){
+    $$('#volverparaatras').on('click', fnVolverAtras)
+
+    function fnVolverAtras(){
+      mainView.router.navigate('/home/')
+    }
+  })
+
+  $$(document).on('page:init', '.page[data-name="addTarjetas"]', function (a){
+    $$('#volverparaatras').on('click', fnVolverAtras)
+
+    function fnVolverAtras(){
+      mainView.router.navigate('/home/')
+    }
+  })
+
+  $$(document).on('page:init', '.page[data-name="historial"]', function (a){
+    $$('#volverparaatras').on('click', fnVolverAtras)
+
+    function fnVolverAtras(){
+      mainView.router.navigate('/home/')
+    }
   })
