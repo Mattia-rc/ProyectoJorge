@@ -17,7 +17,7 @@
  .contenedor2 {
    display: flex;
    align-items: center;
-   justify-content: space-between;
+   justify-content: space-evenly;
    margin: 20px 20px 5px 20px;
    gap: 5px;
  }
@@ -257,6 +257,7 @@
    justify-content: space-evenly;
    align-items: center;
    margin-top: 10px;
+   margin-bottom: 45%;
  }
 
  .imagin-1 {
@@ -278,18 +279,27 @@
    padding-top: 40px;
  }
 
- .tarjeta-input2 {
+ .div-tarjetas-inp-2 {
    display: inline;
    text-align: center;
    background-color: #f1f1f1;
    color: #969faa;
-   margin: 0%;
+   padding: 0%;
+   height: 40px;
+   border-radius: 0%;
+   border-color: #969faa;
+ }
+
+ /* .tarjeta-input2 {
+   text-align: center;
+   background-color: #f1f1f1;
+   color: #969faa;
    padding: 0%;
    width: 49.5%;
    height: 40px;
    border-radius: 0%;
    border-color: #969faa;
- }
+ } */
 
  .tarjeta-input3 {
    text-align: center;
@@ -304,5 +314,36 @@
 
  .boton-enviardinero {
    padding: 60px 80px 0px 80px;
+
+ }
+
+ .enviardinero-card {
+   text-align: center;
+   background-color: #fff;
+   width: 65%;
+   margin-top: 10%;
+   padding: 9% 5% 4%;
+   border-radius: 25px;
+   bbox-shadow: -4px -4px 10px 1px rgba(151, 109, 208, 1);
+   -webkit-box-shadow: -4px -4px 10px 1px rgba(151, 109, 208, 1);
+   -moz-box-shadow: -4px -4px 10px 1px rgba(151, 109, 208, 1);
+ }
+
+ .container-mover {
+   display: flex;
+   justify-content: center;
+ }
+
+ .registerbtn5 {
+   background: #976DD0;
+   color: white;
+   padding: 12px 20px;
+   border: none;
+   cursor: pointer;
+   width: 50%;
+   opacity: 0.9;
+   border-radius: 10px;
+   width: 100%;
+   margin-top: 100px;
 
  }

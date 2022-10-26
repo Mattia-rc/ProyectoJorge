@@ -26,6 +26,9 @@ var app = new Framework7({
 
 var mainView = app.views.create('.view-main');
 
+var db = firebase.firestore();
+var colUsuarios = db.collection("Usuarios");
+
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function () {
   console.log("Device is ready!");
@@ -51,42 +54,65 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
 
 
 
-  function fnlog(){
-    const  email = $$('#email').val();
+  function fnlog() {
+    const email = $$('#email').val();
     const password = $$('#psw').val();
+    const nombre = $$('#name').val();
     firebase.auth().signInWithEmailAndPassword(email, password)
-  .then((userCredential) => {
-    // Signed in
-    var user = userCredential.user;
+      .then((userCredential) => {
+        // Signed in
+        var user = userCredential.user;
 
-    console.log("hola@!!! " + email);
-    // ...
+        console.log("hola@!!! " + email);
+        // ...
 
-    mainView.router.navigate('/home/')
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
+        mainView.router.navigate('/home/')
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
 
-    console.error(errorCode);
+        console.error(errorCode);
         console.error(errorMessage);
-  });
+      });
 
   }
 
 
-
   function fncrear() {
     alert("hola")
-    const  email = $$('#email').val();
+    const email = $$('#email').val();
     const password = $$('#psw').val();
+
+
+
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         // Signed in
         var user = userCredential.user;
         console.log("Bienvenid@!!! " + email);
         // ...
-        mainView.router.navigate('/home/');
+        ///////////////////////       mainView.router.navigate('/home/');
+
+        claveDeColeccion = email;
+
+        const name = $$('#name').val();
+
+        const datos = {
+          nombre: name,
+          rol: "usuarios",
+          password: password,
+        }
+
+        colUsuarios.doc(claveDeColeccion).set(datos)
+          .then(function () {
+            mainView.router.navigate('/home/');
+          })
+          .catch(function (e) {
+
+          })
+
+
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -106,68 +132,85 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
 });
 
 
-$$(document).on('page:init', '.page[data-name="home"]', function (a){
+$$(document).on('page:init', '.page[data-name="home"]', function (a) {
   $$('#botonCerrarSesion').on('click', fnCerrar);
   $$('#EnvioDinero').on('click', fnEnviarDinero);
   $$('#addTarjetas').on('click', fnaddTarjetas);
   $$('#tarjetas').on('click', fntarjetas);
   $$('#historial').on('click', fnhistorial);
-  function fnEnviarDinero(){
+  function fnEnviarDinero() {
+    setTimeout(() => {
+      console.log("asd");
+    }, 3000);
+
     mainView.router.navigate('/envioDinero/')
   }
-  function fnaddTarjetas(){
+  function fnaddTarjetas() {
+    setTimeout(() => { }, 1500);
     mainView.router.navigate('/addTarjetas/')
   }
-  function fntarjetas(){
+  function fntarjetas() {
+    setTimeout(() => { }, 1500);
     mainView.router.navigate('/tarjetas/')
   }
-  function fnhistorial(){
+  function fnhistorial() {
+    setTimeout(() => { }, 1500);
     mainView.router.navigate('/historial/')
   }
- 
 
-    function fnCerrar(){
-      const  email = $$('#email').val();
-      const password = $$('#psw').val();
-      firebase.auth().signOut().then(() => {
-        // Sign-out successful.
-        mainView.router.navigate('/index/')
-        console.log("chau " + email);
-      }).catch((error) => {
-        // An error happened.
-      });
-    }
 
-  })
- 
-  $$(document).on('page:init', '.page[data-name="envioDinero"]', function (a){
-    $$('#volverparaatras').on('click', fnVolverAtras)
+  function fnCerrar() {
 
-    function fnVolverAtras(){
-      mainView.router.navigate('/home/')
-    }
-  })
+    firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+      mainView.router.navigate('/index/')
+      console.log("chau ");
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
 
-  $$(document).on('page:init', '.page[data-name="tarjetas"]', function (a){
-    $$('#volverparaatras').on('click', fnVolverAtras)
 
-    function fnVolverAtras(){
-      mainView.router.navigate('/home/')
-    }
-  })
+  // Seguimos en el home
 
-  $$(document).on('page:init', '.page[data-name="addTarjetas"]', function (a){
-    $$('#volverparaatras').on('click', fnVolverAtras)
+  const user = firebase.auth().currentUser;
+  const name = $$('#name').val();
 
-    function fnVolverAtras(){
-      mainView.router.navigate('/home/')
-    }
-  })
+  if (user) {
+    document.getElementById('usuarioHome').innerText = name;
+  } else {
+    // No user is signed in.
+  }
+})
 
-  $$(document).on('page:init', '.page[data-name="historial"]', function (a){
-    $$('#volverparaatras').on('click', fnVolverAtras)
+$$(document).on('page:init', '.page[data-name="envioDinero"]', function (a) {
+  $$('#volverparaatras').on('click', fnVolverAtras)
 
-    function fnVolverAtras(){
-      mainView.router.navigate('/home/')
-    }
-  })
+  function fnVolverAtras() {
+    mainView.router.navigate('/home/')
+  }
+})
+
+$$(document).on('page:init', '.page[data-name="tarjetas"]', function (a) {
+  $$('#volverparaatras').on('click', fnVolverAtras)
+
+  function fnVolverAtras() {
+    mainView.router.navigate('/home/')
+  }
+})
+
+$$(document).on('page:init', '.page[data-name="addTarjetas"]', function (a) {
+  $$('#volverparaatras').on('click', fnVolverAtras)
+
+  function fnVolverAtras() {
+    mainView.router.navigate('/home/')
+  }
+})
+
+$$(document).on('page:init', '.page[data-name="historial"]', function (a) {
+  $$('#volverparaatras').on('click', fnVolverAtras)
+
+  function fnVolverAtras() {
+    mainView.router.navigate('/home/')
+  }
+})
