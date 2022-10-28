@@ -20,6 +20,7 @@ var app = new Framework7({
     { path: '/addTarjetas/', url: 'addTarjetas.html', },
     { path: '/tarjetas/', url: 'tarjetas.html', },
     { path: '/historial/', url: 'historial.html', },
+    { path: '/register/', url: 'register.html', },
   ]
   // ... other parameters
 });
@@ -47,13 +48,12 @@ $$(document).on('page:init', function (e) {
 
 $$(document).on('page:init', '.page[data-name="index"]', function (e) {
 
-
+  $$('#redireccionCuenta').on('click', fnRedireccionCuenta)
   $$('#signIn').on('click', fnlog)
-  $$('#CrearCuenta').on('click', fncrear)
 
-
-
-
+  function fnRedireccionCuenta(){
+    mainView.router.navigate('/register/')
+  }
   function fnlog() {
     const email = $$('#email').val();
     const password = $$('#psw').val();
@@ -79,10 +79,16 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
   }
 
 
+  
+});
+
+$$(document).on('page:init', '.page[data-name="register"]', function (a) {
+  $$('#CrearCuenta').on('click', fncrear)
   function fncrear() {
-    alert("hola")
-    const email = $$('#email').val();
-    const password = $$('#psw').val();
+   
+
+    const email = $$('#correo').val();
+    const password = $$('#password').val();
 
 
 
@@ -96,10 +102,10 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
 
         claveDeColeccion = email;
 
-        const name = $$('#name').val();
+        const nombre = $$('#nombre').val();
 
         const datos = {
-          nombre: name,
+          nombre: nombre,
           rol: "usuarios",
           password: password,
         }
@@ -129,8 +135,7 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
       });
 
   }
-});
-
+})
 
 $$(document).on('page:init', '.page[data-name="home"]', function (a) {
   $$('#botonCerrarSesion').on('click', fnCerrar);

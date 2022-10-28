@@ -123,6 +123,7 @@
    border-radius: 10px;
    width: 100%;
    margin-top: 10px;
+   margin-bottom: 10px;
  }
 
  .registerbtn2 {
@@ -176,6 +177,7 @@
 
  #Primerovisible {
    display: block;
+   margin: 20px;
  }
 
  #restoVisible {
@@ -220,7 +222,8 @@
  .registera {
    padding-top: 20px;
    color: #fff;
-   font-size: 9px;
+   font-size: 15px;
+    color: red;
  }
 
  .logo_persona {
@@ -324,7 +327,7 @@
    margin-top: 10%;
    padding: 9% 5% 4%;
    border-radius: 25px;
-   bbox-shadow: -4px -4px 10px 1px rgba(151, 109, 208, 1);
+   box-shadow: -4px -4px 10px 1px rgba(151, 109, 208, 1);
    -webkit-box-shadow: -4px -4px 10px 1px rgba(151, 109, 208, 1);
    -moz-box-shadow: -4px -4px 10px 1px rgba(151, 109, 208, 1);
  }
