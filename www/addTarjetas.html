@@ -11,32 +11,20 @@
                 <!-- ------------------------------------------------------------------------ -->
                 <h4 class="h4_tar-det">Detalles de la Tarjeta</h4>
 
-                <!-- -------------------------INPUTS DE DATOS------------------------- -->
-                <!-- ------------------------------------------------------------------------ -->
-                <!-- ------------------------------------------------------------------------ -->
-                <div class="tarjeta-input3">
-                    <input type="text" placeholder="Card holder name" required>
+                <div class="div-input_padre">
+                    <div class="input-primary">
+                        <input type="text" name="" placeholder="Ingrese nombre de titular" id="nombreTitular" required>
+                        <input type="number" id="TarjetaIngresada" placeholder="Ingrese su tarjeta" required>
+                    </div>
+                    <div class="div-input_twice">
+                        <input type="number" id="FECHAIngresado" placeholder="Fecha de Caducidad" required>
+                        <input type="number" id="CVVIngresado" placeholder="CVV" required>
+                    </div>
+                    <button type="button" id="agregarTarjetas" name="signIn" class="open-alert2 registerbtn">agrega tu
+                        tarjeta
+                    </button>
                 </div>
 
-                <div class="tarjeta-input3">
-                    <input type="number" placeholder="Card number" required>
-                </div>
-
-                <div class="div-tarjetas-inp-2">
-                    <input class="tarjeta-input2" type="number" placeholder="Exp.Date" required>
-                    <input class="tarjeta-input2" type="number" placeholder="CVV" required>
-                </div>
-
-                <div class="tarjeta-input3">
-                    <input type="number" placeholder="Monto $" required>
-                </div>
-
-                <!-- -------------------------BOTON ENVIAR DINERO------------------------- -->
-                <!-- ------------------------------------------------------------------------ -->
-                <!-- ------------------------------------------------------------------------ -->
-                <div class="boton-enviardinero">
-                    <button type="button" class="registerbtn">Añadir Trajeta</button>
-                </div>
             </div>
         </div>
     </div>

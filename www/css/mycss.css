@@ -223,7 +223,7 @@
    padding-top: 20px;
    color: #fff;
    font-size: 15px;
-    color: red;
+   color: #fff;
  }
 
  .logo_persona {
@@ -282,38 +282,9 @@
    padding-top: 40px;
  }
 
- .div-tarjetas-inp-2 {
-   display: inline;
-   text-align: center;
-   background-color: #f1f1f1;
-   color: #969faa;
-   padding: 0%;
-   height: 40px;
-   border-radius: 0%;
-   border-color: #969faa;
- }
 
- /* .tarjeta-input2 {
-   text-align: center;
-   background-color: #f1f1f1;
-   color: #969faa;
-   padding: 0%;
-   width: 49.5%;
-   height: 40px;
-   border-radius: 0%;
-   border-color: #969faa;
- } */
 
- .tarjeta-input3 {
-   text-align: center;
-   background-color: #f1f1f1;
-   color: #969faa;
-   margin: 0%;
-   padding: 0%;
-   height: 40px;
-   border-radius: 0%;
-   border-color: #969faa;
- }
+
 
  .boton-enviardinero {
    padding: 60px 80px 0px 80px;
@@ -348,5 +319,33 @@
    border-radius: 10px;
    width: 100%;
    margin-top: 100px;
+
+ }
+
+ .div-input_padre {
+   margin: 5px;
+   display: flex;
+   align-items: center;
+   flex-wrap: wrap;
+   flex-direction: column;
+   gap: 10%;
+
+ }
+
+ .input-primary input {
+   border: 2px solid #976DD0;
+   padding: 10px;
+   margin-bottom: 10%;
+ }
+
+
+ .div-input_twice {
+   display: flex;
+   justify-content: space-between;
+ }
+
+ .div-input_twice input {
+   border: 2px solid #976DD0;
+   padding: 10px;
 
  }

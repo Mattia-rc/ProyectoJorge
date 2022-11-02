@@ -40,7 +40,7 @@ $$(document).on('page:init', function (e) {
 
 })
 
-
+var nombreExtraido
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
@@ -51,44 +51,18 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
   $$('#redireccionCuenta').on('click', fnRedireccionCuenta)
   $$('#signIn').on('click', fnlog)
 
-  function fnRedireccionCuenta(){
-    mainView.router.navigate('/register/')
-  }
-  function fnlog() {
-    const email = $$('#email').val();
-    const password = $$('#psw').val();
-    const nombre = $$('#name').val();
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-
-        console.log("hola@!!! " + email);
-        // ...
-
-        mainView.router.navigate('/home/')
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-
-        console.error(errorCode);
-        console.error(errorMessage);
-      });
-
-  }
 
 
-  
+
 });
 
 $$(document).on('page:init', '.page[data-name="register"]', function (a) {
   $$('#CrearCuenta').on('click', fncrear)
   function fncrear() {
-   
 
-    const email = $$('#correo').val();
-    const password = $$('#password').val();
+
+    var email = $$('#correo').val();
+    var password = $$('#password').val();
 
 
 
@@ -102,12 +76,20 @@ $$(document).on('page:init', '.page[data-name="register"]', function (a) {
 
         claveDeColeccion = email;
 
-        const nombre = $$('#nombre').val();
+        var nombre = $$('#nombre').val();
 
-        const datos = {
+
+
+
+        var datos = {
           nombre: nombre,
           rol: "usuarios",
           password: password,
+          NombreDeTitular: nombreTitular,
+          NumeroDeTarjeta: TarjetaIngresada,
+          CVU: CVUIngresado,
+          CVV: CVVIngresado,
+
         }
 
         colUsuarios.doc(claveDeColeccion).set(datos)
@@ -143,46 +125,16 @@ $$(document).on('page:init', '.page[data-name="home"]', function (a) {
   $$('#addTarjetas').on('click', fnaddTarjetas);
   $$('#tarjetas').on('click', fntarjetas);
   $$('#historial').on('click', fnhistorial);
-  function fnEnviarDinero() {
-    setTimeout(() => {
-      console.log("asd");
-    }, 3000);
-
-    mainView.router.navigate('/envioDinero/')
-  }
-  function fnaddTarjetas() {
-    setTimeout(() => { }, 1500);
-    mainView.router.navigate('/addTarjetas/')
-  }
-  function fntarjetas() {
-    setTimeout(() => { }, 1500);
-    mainView.router.navigate('/tarjetas/')
-  }
-  function fnhistorial() {
-    setTimeout(() => { }, 1500);
-    mainView.router.navigate('/historial/')
-  }
-
-
-  function fnCerrar() {
-
-    firebase.auth().signOut().then(() => {
-      // Sign-out successful.
-      mainView.router.navigate('/index/')
-      console.log("chau ");
-    }).catch((error) => {
-      // An error happened.
-    });
-  }
 
 
   // Seguimos en el home
 
-  const user = firebase.auth().currentUser;
-  const name = $$('#name').val();
+  user = firebase.auth().currentUser;
+  //name = $$('#name').val();
 
   if (user) {
-    document.getElementById('usuarioHome').innerText = name;
+    //document.getElementById('usuarioHome').innerText = name;
+    $$("#usuarioHome").text(nombreExtraido);
   } else {
     // No user is signed in.
   }
@@ -207,6 +159,9 @@ $$(document).on('page:init', '.page[data-name="tarjetas"]', function (a) {
 $$(document).on('page:init', '.page[data-name="addTarjetas"]', function (a) {
   $$('#volverparaatras').on('click', fnVolverAtras)
 
+  $$('#agregarTarjetas').on('click', fnAgregarTarjetas)
+
+
   function fnVolverAtras() {
     mainView.router.navigate('/home/')
   }
@@ -219,3 +174,99 @@ $$(document).on('page:init', '.page[data-name="historial"]', function (a) {
     mainView.router.navigate('/home/')
   }
 })
+
+
+
+
+/*MIS FUNCIONES*/
+
+
+function fnEnviarDinero() {
+  setTimeout(() => {
+    console.log("asd");
+  }, 3000);
+
+  mainView.router.navigate('/envioDinero/')
+}
+function fnaddTarjetas() {
+  setTimeout(() => { }, 1500);
+  mainView.router.navigate('/addTarjetas/')
+}
+function fntarjetas() {
+  setTimeout(() => { }, 1500);
+  mainView.router.navigate('/tarjetas/')
+}
+function fnhistorial() {
+  setTimeout(() => { }, 1500);
+  mainView.router.navigate('/historial/')
+}
+
+
+function fnCerrar() {
+
+  firebase.auth().signOut().then(() => {
+    // Sign-out successful.
+    mainView.router.navigate('/index/')
+    console.log("chau " + nombreExtraido);
+  }).catch((error) => {
+    // An error happened.
+  });
+}
+
+
+
+function fnRedireccionCuenta() {
+  mainView.router.navigate('/register/')
+}
+function fnlog() {
+  var email = $$('#email').val();
+  var password = $$('#psw').val();
+  var nombre = $$('#name').val();
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+
+      var user = userCredential.user;
+
+      console.log("hola@!!! " + email);
+      // ...
+      db.collection("Usuarios").doc(email).get()
+
+        .then((doc) => {
+          if (doc.exists) {
+            nombreExtraido = doc.data().nombre
+            console.log(nombreExtraido);
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+
+          mainView.router.navigate('/home/')
+        })
+
+
+
+    })
+
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+
+      console.error(errorCode);
+      console.error(errorMessage);
+    });
+
+}
+
+function fnAgregarTarjetas() {
+  var nombreTitular = $$('#nombreTitular').val();
+  var TarjetaIngresada = $$('#TarjetaIngresada').val();
+  var FechaIngresado = $$('#FECHAIngresado').val();
+  var CVVIngresado = $$('#CVVIngresado').val();
+  var CVUingresado = parseInt(Math.random() * 10000)
+  console.log("El nombre del titular es " + nombreTitular);
+  console.log("la tarjeta ingresada es " + TarjetaIngresada);
+  console.log("La fecha ingresada es " + FechaIngresado);
+  console.log("El CVV ingresado es " + CVVIngresado);
+  console.log("El cvu random es " + CVUingresado);
+}
