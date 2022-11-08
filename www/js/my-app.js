@@ -1,5 +1,6 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
+var CVUingresado = "CVU"
 
 var app = new Framework7({
   // App root element
@@ -29,6 +30,8 @@ var mainView = app.views.create('.view-main');
 
 var db = firebase.firestore();
 var colUsuarios = db.collection("Usuarios");
+var email, nombre
+
 
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function () {
@@ -61,8 +64,8 @@ $$(document).on('page:init', '.page[data-name="register"]', function (a) {
   function fncrear() {
 
 
-    var email = $$('#correo').val();
-    var password = $$('#password').val();
+    email = $$('#correo').val();
+    password = $$('#password').val();
 
 
 
@@ -85,10 +88,10 @@ $$(document).on('page:init', '.page[data-name="register"]', function (a) {
           nombre: nombre,
           rol: "usuarios",
           password: password,
-          NombreDeTitular: nombreTitular,
-          NumeroDeTarjeta: TarjetaIngresada,
-          CVU: CVUIngresado,
-          CVV: CVVIngresado,
+          /*     NombreDeTitular: nombreTitular,
+              NumeroDeTarjeta: TarjetaIngresada,
+              CVU: CVUIngresado,
+              CVV: CVVIngresado, */
 
         }
 
@@ -169,7 +172,7 @@ $$(document).on('page:init', '.page[data-name="addTarjetas"]', function (a) {
 
 $$(document).on('page:init', '.page[data-name="historial"]', function (a) {
   $$('#volverparaatras').on('click', fnVolverAtras)
-
+    $$('#recargarDinero').on('click', fnCargar)
   function fnVolverAtras() {
     mainView.router.navigate('/home/')
   }
@@ -219,9 +222,9 @@ function fnRedireccionCuenta() {
   mainView.router.navigate('/register/')
 }
 function fnlog() {
-  var email = $$('#email').val();
-  var password = $$('#psw').val();
-  var nombre = $$('#name').val();
+  email = $$('#email').val();
+  password = $$('#psw').val();
+  nombre = $$('#name').val();
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in
@@ -269,4 +272,57 @@ function fnAgregarTarjetas() {
   console.log("La fecha ingresada es " + FechaIngresado);
   console.log("El CVV ingresado es " + CVVIngresado);
   console.log("El cvu random es " + CVUingresado);
+
+
+  claveDeColeccion = email;
+  var datos2 = {
+    nombreTitular: nombreTitular,
+    TarjetaIngresada: TarjetaIngresada,
+    FechaIngresado: FechaIngresado,
+    CVVIngresado: CVVIngresado,
+    CVUingresado: CVUingresado
+  }
+
+
+
+/*
+colUsuarios.doc(claveDeColeccion).collection("subColeccion").doc( ).
+
+
+*/
+
+
+  colUsuarios.doc(claveDeColeccion).update(datos2)
+    .then(function () {
+      console.log("agrego tarjetas");
+    })
+    .catch(function (e) {
+      console.log("no agrego nada");
+    })
+
+
 }
+
+
+
+function fnCargar(){
+
+  var montoCargar = $$('#monto-a-cargar').val();
+  var cbuCargar = $$('#cbu-cargar').val();
+  claveDeColeccion = email;
+  var datos3 = {
+    montoCargar: montoCargar,
+    cbuCargar: cbuCargar
+  }
+
+  colUsuarios.doc(claveDeColeccion).update(datos3)
+    .then(function () {
+      console.log("agrego dinero");
+    })
+    .catch(function (e) {
+      console.log("no agrego nada");
+    })
+
+
+}
+
