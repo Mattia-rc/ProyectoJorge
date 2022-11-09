@@ -30,9 +30,9 @@ var mainView = app.views.create('.view-main');
 
 var db = firebase.firestore();
 var colUsuarios = db.collection("Usuarios");
-var email, nombre
+var email, nombre, montoCargar
 
-
+var colMovimientos = db.collection("Movimientos")
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function () {
   console.log("Device is ready!");
@@ -130,7 +130,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function (a) {
   $$('#addTarjetas').on('click', fnaddTarjetas);
   $$('#tarjetas').on('click', fntarjetas);
   $$('#historial').on('click', fnhistorial);
- 
+
 
   // Seguimos en el home
 
@@ -153,9 +153,10 @@ $$(document).on('page:init', '.page[data-name="home"]', function (a) {
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
-      }}
+      }
+    }
 
-)
+    )
 })
 
 $$(document).on('page:init', '.page[data-name="envioDinero"]', function (a) {
@@ -179,7 +180,7 @@ $$(document).on('page:init', '.page[data-name="addTarjetas"]', function (a) {
 
   $$('#agregarTarjetas').on('click', fnAgregarTarjetas)
 
-   
+
 
 
   function fnVolverAtras() {
@@ -189,7 +190,7 @@ $$(document).on('page:init', '.page[data-name="addTarjetas"]', function (a) {
 
 $$(document).on('page:init', '.page[data-name="historial"]', function (a) {
   $$('#volverparaatras').on('click', fnVolverAtras)
-    $$('#recargarDinero').on('click', fnCargar)
+  $$('#recargarDinero').on('click', fnCargar)
   function fnVolverAtras() {
     mainView.router.navigate('/home/')
   }
@@ -202,7 +203,7 @@ $$(document).on('page:init', '.page[data-name="historial"]', function (a) {
 
 
 function fnEnviarDinero() {
-  setTimeout(() => {}, 3000);
+  setTimeout(() => { }, 3000);
 
   mainView.router.navigate('/envioDinero/')
 }
@@ -279,7 +280,7 @@ function fnlog() {
 
 function fnAgregarTarjetas() {
 
-  
+
   var nombreTitular = $$('#nombreTitular').val();
   var TarjetaIngresada = $$('#TarjetaIngresada').val();
   var FechaIngresado = $$('#FECHAIngresado').val();
@@ -291,7 +292,7 @@ function fnAgregarTarjetas() {
   console.log("El CVV ingresado es " + CVVIngresado);
   console.log("El cvu random es " + CVUingresado);
 
- 
+
 
   claveDeColeccion = email;
   var datos2 = {
@@ -305,34 +306,34 @@ function fnAgregarTarjetas() {
 
 
 
-/*
-colUsuarios.doc(claveDeColeccion).collection("subColeccion").doc( ).
-
-
-*/
+  /*
+  colUsuarios.doc(claveDeColeccion).collection("subColeccion").doc( ).
+  
+  
+  */
 
 
   colUsuarios.doc(claveDeColeccion).update(datos2)
     .then(function () {
       console.log("agrego tarjetas");
-      
+
     })
     .catch(function (e) {
       console.log("no agrego nada");
     })
 
-  }
+}
 
 
 
-function fnCargar(){
+function fnCargar() {
 
-  var montoCargar = $$('#monto-a-cargar').val();
+   montoCargar = $$('#monto-a-cargar').val();
   var cbuCargar = $$('#cbu-cargar').val();
   claveDeColeccion = email;
   var datos3 = {
-    montoCargar: montoCargar,
-    cbuCargar: cbuCargar
+    montoCargar: montoCargar
+
   }
 
   colUsuarios.doc(claveDeColeccion).update(datos3)
@@ -347,13 +348,14 @@ function fnCargar(){
 }
 
 
-function fnCargarEnviar(){
-  var montorEnviar = $$("#montoEnviar").val()
-  var emailEnviar = $$("#emailEnviar").val()
+function fnCargarEnviar() {
+  /* 
+  
   claveDeColeccion = email;
   var datos4 =  {
+              miEmail: email,
               montorEnviar: montorEnviar,
-              emailEnviar: emailEnviar,
+              emailEnviar: emailEnviar
   }
   colUsuarios.doc(claveDeColeccion).update(datos4)
     .then(function () {
@@ -362,4 +364,39 @@ function fnCargarEnviar(){
     .catch(function (e) {
       console.log("no envio");
     })
+    */
+
+  claveDeColeccion = email;
+  var montorEnviar = $$("#montoEnviar").val()
+  var emailEnviar = $$("#emailEnviar").val()
+  var datos4 = {
+    emailEmisor: email,
+    emailReceptor: emailEnviar,
+    importe: montorEnviar
+  }
+  if(montoCargar >= montorEnviar){
+    colMovimientos.doc(claveDeColeccion).set(datos4);
+    console.log("se realizo con exito la transaccion");
+  }else{
+    console.log("no tienes suficiente dinero para enviar ya que tu dinero que tienes en cuenta es " + montoCargar);
+  }
+  
+/* 
+  .then(function () {
+    if(montoCargar >= montorEnviar){
+      console.log("transaccion por enviarse");
+    }else{
+      console.log("no tienes suficiente dinero");
+    }
+    console.log("se creo correctamente coleccion movimientos");
+  })
+  .catch(function(e){
+
+    console.log("no creo ninguna coleccion de movimientos");
+
+  }) */
+
+ 
 }
+
+
