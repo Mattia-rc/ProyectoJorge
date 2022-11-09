@@ -44,6 +44,7 @@ $$(document).on('page:init', function (e) {
 })
 
 var nombreExtraido
+var cvuExtraido;
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
@@ -79,7 +80,7 @@ $$(document).on('page:init', '.page[data-name="register"]', function (a) {
 
         claveDeColeccion = email;
 
-        var nombre = $$('#nombre').val();
+        nombre = $$('#nombre').val();
 
 
 
@@ -97,6 +98,7 @@ $$(document).on('page:init', '.page[data-name="register"]', function (a) {
 
         colUsuarios.doc(claveDeColeccion).set(datos)
           .then(function () {
+            $$("#usuarioHome").text(nombre);
             mainView.router.navigate('/home/');
           })
           .catch(function (e) {
@@ -128,7 +130,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function (a) {
   $$('#addTarjetas').on('click', fnaddTarjetas);
   $$('#tarjetas').on('click', fntarjetas);
   $$('#historial').on('click', fnhistorial);
-
+ 
 
   // Seguimos en el home
 
@@ -138,14 +140,27 @@ $$(document).on('page:init', '.page[data-name="home"]', function (a) {
   if (user) {
     //document.getElementById('usuarioHome').innerText = name;
     $$("#usuarioHome").text(nombreExtraido);
+
   } else {
     // No user is signed in.
   }
+  db.collection("Usuarios").doc(email).get()
+
+    .then((doc) => {
+      if (doc.exists) {
+        cvuExtraido = doc.data().CVUingresado
+        $$("#cvuBox").text(cvuExtraido);
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }}
+
+)
 })
 
 $$(document).on('page:init', '.page[data-name="envioDinero"]', function (a) {
   $$('#volverparaatras').on('click', fnVolverAtras)
-
+  $$('#enviarDinerouser').on('click', fnCargarEnviar)
   function fnVolverAtras() {
     mainView.router.navigate('/home/')
   }
@@ -185,9 +200,7 @@ $$(document).on('page:init', '.page[data-name="historial"]', function (a) {
 
 
 function fnEnviarDinero() {
-  setTimeout(() => {
-    console.log("asd");
-  }, 3000);
+  setTimeout(() => {}, 3000);
 
   mainView.router.navigate('/envioDinero/')
 }
@@ -238,6 +251,7 @@ function fnlog() {
         .then((doc) => {
           if (doc.exists) {
             nombreExtraido = doc.data().nombre
+            $$("#usuarioHome").text(nombreExtraido);
             console.log(nombreExtraido);
           } else {
             // doc.data() will be undefined in this case
@@ -266,13 +280,14 @@ function fnAgregarTarjetas() {
   var TarjetaIngresada = $$('#TarjetaIngresada').val();
   var FechaIngresado = $$('#FECHAIngresado').val();
   var CVVIngresado = $$('#CVVIngresado').val();
-  var CVUingresado = parseInt(Math.random() * 10000)
+  var CVUingresado = parseInt(Math.random() * 1000000)
   console.log("El nombre del titular es " + nombreTitular);
   console.log("la tarjeta ingresada es " + TarjetaIngresada);
   console.log("La fecha ingresada es " + FechaIngresado);
   console.log("El CVV ingresado es " + CVVIngresado);
   console.log("El cvu random es " + CVUingresado);
 
+ 
 
   claveDeColeccion = email;
   var datos2 = {
@@ -282,6 +297,7 @@ function fnAgregarTarjetas() {
     CVVIngresado: CVVIngresado,
     CVUingresado: CVUingresado
   }
+
 
 
 
@@ -295,13 +311,13 @@ colUsuarios.doc(claveDeColeccion).collection("subColeccion").doc( ).
   colUsuarios.doc(claveDeColeccion).update(datos2)
     .then(function () {
       console.log("agrego tarjetas");
+      
     })
     .catch(function (e) {
       console.log("no agrego nada");
     })
 
-
-}
+  }
 
 
 
@@ -326,3 +342,20 @@ function fnCargar(){
 
 }
 
+
+function fnCargarEnviar(){
+  var montorEnviar = $$("#montoEnviar").val()
+  var emailEnviar = $$("#emailEnviar").val()
+  claveDeColeccion = email;
+  var datos4 =  {
+              montorEnviar: montorEnviar,
+              emailEnviar: emailEnviar,
+  }
+  colUsuarios.doc(claveDeColeccion).update(datos4)
+    .then(function () {
+      console.log("Envio");
+    })
+    .catch(function (e) {
+      console.log("no envio");
+    })
+}
