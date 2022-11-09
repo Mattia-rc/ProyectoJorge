@@ -164,6 +164,8 @@ $$(document).on('page:init', '.page[data-name="addTarjetas"]', function (a) {
 
   $$('#agregarTarjetas').on('click', fnAgregarTarjetas)
 
+   
+
 
   function fnVolverAtras() {
     mainView.router.navigate('/home/')
@@ -262,6 +264,8 @@ function fnlog() {
 }
 
 function fnAgregarTarjetas() {
+
+  
   var nombreTitular = $$('#nombreTitular').val();
   var TarjetaIngresada = $$('#TarjetaIngresada').val();
   var FechaIngresado = $$('#FECHAIngresado').val();
