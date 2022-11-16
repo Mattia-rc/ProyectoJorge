@@ -32,6 +32,8 @@ var db = firebase.firestore();
 var colUsuarios = db.collection("Usuarios");
 var email, nombre, montoCargar
 
+var resultado;
+
 var colMovimientos = db.collection("Movimientos")
 // Handle Cordova Device Ready Event
 $$(document).on('deviceready', function () {
@@ -328,16 +330,21 @@ function fnAgregarTarjetas() {
 
 function fnCargar() {
 
-   montoCargar = $$('#monto-a-cargar').val();
+  montoCargar = $$('#monto-a-cargar').val();
   var cbuCargar = $$('#cbu-cargar').val();
   claveDeColeccion = email;
-  var datos3 = {
-    montoCargar: montoCargar
 
+  var datos3 = {
+    montoCargar: montoCargar,
+    totalCuenta: resultado
   }
+  /* RESULTADO += MONTOASDSA */
+  resultado += montoCargar
 
   colUsuarios.doc(claveDeColeccion).update(datos3)
     .then(function () {
+      console.log(resultado);
+      console.log(montoCargar);
       console.log("agrego dinero");
     })
     .catch(function (e) {
@@ -349,54 +356,25 @@ function fnCargar() {
 
 
 function fnCargarEnviar() {
-  /* 
-  
-  claveDeColeccion = email;
-  var datos4 =  {
-              miEmail: email,
-              montorEnviar: montorEnviar,
-              emailEnviar: emailEnviar
-  }
-  colUsuarios.doc(claveDeColeccion).update(datos4)
-    .then(function () {
-      console.log("Envio");
-    })
-    .catch(function (e) {
-      console.log("no envio");
-    })
-    */
-
+  dayjs.locale('es');
+  const date = dayjs().format('YYYY-DD-MM');
+  const hour = dayjs().format('HH:mm:ss');
+  const timestamp = dayjs(date).unix()
   claveDeColeccion = email;
   var montorEnviar = $$("#montoEnviar").val()
   var emailEnviar = $$("#emailEnviar").val()
   var datos4 = {
-    emailEmisor: email,
-    emailReceptor: emailEnviar,
+    email: email,
+    timestamp: timestamp,
+    fecha: date,
+    hora: hour,
+    sentido: "EGRESO",
+    recepEmisor: emailEnviar,
     importe: montorEnviar
   }
-  if(montoCargar >= montorEnviar){
-    colMovimientos.doc(claveDeColeccion).set(datos4);
-    console.log("se realizo con exito la transaccion");
-  }else{
-    console.log("no tienes suficiente dinero para enviar ya que tu dinero que tienes en cuenta es " + montoCargar);
-  }
-  
-/* 
-  .then(function () {
-    if(montoCargar >= montorEnviar){
-      console.log("transaccion por enviarse");
-    }else{
-      console.log("no tienes suficiente dinero");
-    }
-    console.log("se creo correctamente coleccion movimientos");
-  })
-  .catch(function(e){
-
-    console.log("no creo ninguna coleccion de movimientos");
-
-  }) */
-
- 
+  console.log(datos4);
+  colMovimientos.doc(claveDeColeccion).set(datos4);
+  // /// seguir para registrar el movimiento de ingreso en la otra cuenta
 }
 
 
