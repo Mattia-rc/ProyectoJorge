@@ -32,6 +32,8 @@ var db = firebase.firestore();
 var colUsuarios = db.collection("Usuarios");
 var email, nombre, montoCargar
 
+var movIngreso = db.collection("Ingresos")
+
 var resultado;
 
 var colMovimientos = db.collection("Movimientos")
@@ -315,7 +317,7 @@ function fnAgregarTarjetas() {
   */
 
 
-  colUsuarios.doc(claveDeColeccion).update(datos2)
+  movIngreso.doc(claveDeColeccion).set(datos2)
     .then(function () {
       console.log("agrego tarjetas");
 
@@ -331,19 +333,27 @@ function fnAgregarTarjetas() {
 function fnCargar() {
 
   montoCargar = $$('#monto-a-cargar').val();
-  var cbuCargar = $$('#cbu-cargar').val();
-  claveDeColeccion = email;
+  /*  var cbuCargar = $$('#cbu-cargar').val(); */
 
+  const date = dayjs().format('YYYY-DD-MM');
+  const hour = dayjs().format('HH:mm:ss');
+  const timestamp = dayjs(date).unix()
+
+  claveDeColeccionnn = email + "-" + timestamp;
   var datos3 = {
-    montoCargar: montoCargar,
-    totalCuenta: resultado
-  }
-  /* RESULTADO += MONTOASDSA */
-  resultado += montoCargar
+    email: email,
+    timestamp: timestamp,
+    fecha: date,
+    hora: hour,
+    sentido: "INGRESO",
+    MontoCargar: montoCargar
 
-  colUsuarios.doc(claveDeColeccion).update(datos3)
+  }
+
+
+  colMovimientos.doc(claveDeColeccionnn).set(datos3)
     .then(function () {
-      console.log(resultado);
+
       console.log(montoCargar);
       console.log("agrego dinero");
     })
@@ -360,10 +370,20 @@ function fnCargarEnviar() {
   const date = dayjs().format('YYYY-DD-MM');
   const hour = dayjs().format('HH:mm:ss');
   const timestamp = dayjs(date).unix()
-  claveDeColeccion = email;
   var montorEnviar = $$("#montoEnviar").val()
   var emailEnviar = $$("#emailEnviar").val()
+  claveDeColeccion = emailEnviar + "-" + timestamp;
   var datos4 = {
+    email: email,
+    timestamp: timestamp,
+    fecha: date,
+    hora: hour,
+    sentido: "INGRESO",
+    recepEmisor: emailEnviar,
+    importe: montorEnviar
+  }
+  claveDeColeccionn = email + "-" + timestamp;
+  var datos5 = {
     email: email,
     timestamp: timestamp,
     fecha: date,
@@ -372,9 +392,15 @@ function fnCargarEnviar() {
     recepEmisor: emailEnviar,
     importe: montorEnviar
   }
+
+  /*   colMovimientos.doc(claveDeColeccion).set(datos5) */
+
   console.log(datos4);
   colMovimientos.doc(claveDeColeccion).set(datos4);
+  colMovimientos.doc(claveDeColeccionn).set(datos5);
   // /// seguir para registrar el movimiento de ingreso en la otra cuenta
 }
+
+
 
 
