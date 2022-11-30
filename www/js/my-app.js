@@ -30,7 +30,7 @@ var mainView = app.views.create('.view-main');
 
 var db = firebase.firestore();
 var colUsuarios = db.collection("Usuarios");
-var email, nombre, montoCargar
+var email, nombre, montoCargar, emailEnviar, montorEnviar
 
 var movIngreso = db.collection("Ingresos")
 
@@ -215,10 +215,7 @@ function fnaddTarjetas() {
   setTimeout(() => { }, 1500);
   mainView.router.navigate('/addTarjetas/')
 }
-function fntarjetas() {
-  setTimeout(() => { }, 1500);
-  mainView.router.navigate('/tarjetas/')
-}
+
 function fnhistorial() {
   setTimeout(() => { }, 1500);
   mainView.router.navigate('/historial/')
@@ -337,9 +334,10 @@ function fnCargar() {
 
   const date = dayjs().format('YYYY-DD-MM');
   const hour = dayjs().format('HH:mm:ss');
-  const timestamp = dayjs(date).unix()
+  const timestamp = dayjs().format('YYYY-DD-MM-HH:mm:ss')
+  var emailv2 = email
 
-  claveDeColeccionnn = email + "-" + timestamp;
+  claveDeColeccion = emailv2 + "-" + timestamp;
   var datos3 = {
     email: email,
     timestamp: timestamp,
@@ -351,7 +349,7 @@ function fnCargar() {
   }
 
 
-  colMovimientos.doc(claveDeColeccionnn).set(datos3)
+  colMovimientos.doc(claveDeColeccion).set(datos3)
     .then(function () {
 
       console.log(montoCargar);
@@ -369,17 +367,17 @@ function fnCargarEnviar() {
   dayjs.locale('es');
   const date = dayjs().format('YYYY-DD-MM');
   const hour = dayjs().format('HH:mm:ss');
-  const timestamp = dayjs(date).unix()
+  const timestamp = dayjs().format('YYYY-DD-MM-HH:mm:ss')
   var montorEnviar = $$("#montoEnviar").val()
   var emailEnviar = $$("#emailEnviar").val()
   claveDeColeccion = emailEnviar + "-" + timestamp;
   var datos4 = {
-    email: email,
+    email: emailEnviar,
     timestamp: timestamp,
     fecha: date,
     hora: hour,
     sentido: "INGRESO",
-    recepEmisor: emailEnviar,
+    recepEmisor: email,
     importe: montorEnviar
   }
   claveDeColeccionn = email + "-" + timestamp;
@@ -401,6 +399,35 @@ function fnCargarEnviar() {
   // /// seguir para registrar el movimiento de ingreso en la otra cuenta
 }
 
-
+function fntarjetas() {
+  setTimeout(() => { }, 1500);
+  mainView.router.navigate('/tarjetas/')
+  UltMovimiento = $$('#ultMovimiento').val();
+  db.collection("Movimientos").where("email", "==", email).where("sentido", "==", "EGRESO").get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log("Le envia " + doc.data().email);
+        console.log(doc.data().recepEmisor);
+        console.log(doc.data().sentido);
+        console.log(doc.data().importe);
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+  db.collection("Movimientos").where("recepEmisor", "==", email).where("sentido", "==", "INGRESO").get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log("Le llega " + doc.data().email);
+        console.log(doc.data().sentido);
+        console.log(doc.data().importe);
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+}
 
 
